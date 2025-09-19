@@ -1,0 +1,54 @@
+{
+  "name": "castle-graphql",
+  "version": "0.1.0",
+  "description": "Example GraphQL provider service for French rulers - demonstrating Entente GraphQL contract testing",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:worker": "tsc --project tsconfig.worker.json",
+    "build:all": "pnpm run build && pnpm run build:worker",
+    "dev": "wrangler dev",
+    "dev:node": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "test": "vitest run test/provider.test.ts",
+    "deploy": "wrangler deploy",
+    "deploy:dev": "wrangler deploy --env development",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:prod": "wrangler deploy --env production",
+    "register:provider": "entente register-service --type provider --service castle-graphql --spec spec/schema.graphql --version 0.1.0 --environment test",
+    "upload:spec": "entente upload-spec --service castle-graphql --version 0.1.0 --environment test --spec spec/schema.graphql",
+    "deploy:provider": "entente deploy-service --type provider --service castle-graphql --version 0.1.0 --environment test",
+    "record:deployment": "entente record-deployment --service castle-graphql --version 0.1.0 --environment test",
+    "can-i-deploy": "entente can-i-deploy --type provider --service castle-graphql --version 0.1.0 --environment test",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@entente/fixtures": "^0.1.11",
+    "@entente/provider": "^0.1.11",
+    "@entente/types": "^0.1.11",
+    "@hono/node-server": "^1.13.5",
+    "dotenv": "^17.2.2",
+    "graphql": "^16.9.0",
+    "graphql-yoga": "^5.8.0",
+    "hono": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250913.0",
+    "@entente/cli": "^0.1.11",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "wrangler": "latest"
+  },
+  "keywords": [
+    "entente",
+    "contract-testing",
+    "example",
+    "provider",
+    "graphql",
+    "rulers"
+  ]
+}

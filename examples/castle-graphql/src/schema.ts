@@ -1,0 +1,144 @@
+export const typeDefs = /* GraphQL */ `
+  """
+  French Rulers GraphQL API
+  Provides information about historical French rulers and their associated castles
+  """
+
+  type Ruler {
+    """Unique identifier for the ruler"""
+    id: ID!
+
+    """Full name of the ruler"""
+    name: String!
+
+    """Royal title (e.g., King of France, The Sun King)"""
+    title: String!
+
+    """Year the ruler began their reign"""
+    reignStart: Int!
+
+    """Year the ruler ended their reign (null if still reigning)"""
+    reignEnd: Int
+
+    """Royal house or dynasty"""
+    house: String!
+
+    """Castle IDs associated with this ruler (references to castle-service)"""
+    castleIds: [ID!]!
+
+    """Biography and description of the ruler"""
+    description: String
+
+    """Notable achievements and accomplishments"""
+    achievements: [String!]
+  }
+
+  """
+  Input type for creating a new ruler
+  """
+  input CreateRulerInput {
+    """Full name of the ruler"""
+    name: String!
+
+    """Royal title"""
+    title: String!
+
+    """Year the ruler began their reign"""
+    reignStart: Int!
+
+    """Year the ruler ended their reign"""
+    reignEnd: Int
+
+    """Royal house or dynasty"""
+    house: String!
+
+    """Castle IDs to associate with this ruler"""
+    castleIds: [ID!]
+
+    """Biography and description"""
+    description: String
+
+    """Notable achievements"""
+    achievements: [String!]
+  }
+
+  """
+  Input type for updating an existing ruler
+  """
+  input UpdateRulerInput {
+    """Full name of the ruler"""
+    name: String
+
+    """Royal title"""
+    title: String
+
+    """Year the ruler began their reign"""
+    reignStart: Int
+
+    """Year the ruler ended their reign"""
+    reignEnd: Int
+
+    """Royal house or dynasty"""
+    house: String
+
+    """Biography and description"""
+    description: String
+
+    """Notable achievements"""
+    achievements: [String!]
+  }
+
+  """
+  Response type for delete operations
+  """
+  type DeleteResponse {
+    """Whether the deletion was successful"""
+    success: Boolean!
+
+    """Optional message about the deletion"""
+    message: String
+  }
+
+  """
+  Root query type
+  """
+  type Query {
+    """Get all rulers"""
+    listRulers: [Ruler!]!
+
+    """Get a specific ruler by ID"""
+    getRuler(id: ID!): Ruler
+
+    """Get all rulers associated with a specific castle"""
+    getRulersByCastle(castleId: ID!): [Ruler!]!
+
+    """Get all rulers from a specific royal house"""
+    getRulersByHouse(house: String!): [Ruler!]!
+
+    """Get rulers who reigned during a specific time period"""
+    getRulersByPeriod(startYear: Int!, endYear: Int!): [Ruler!]!
+
+    """Health check endpoint"""
+    health: String!
+  }
+
+  """
+  Root mutation type
+  """
+  type Mutation {
+    """Create a new ruler"""
+    createRuler(input: CreateRulerInput!): Ruler!
+
+    """Update an existing ruler"""
+    updateRuler(id: ID!, input: UpdateRulerInput!): Ruler!
+
+    """Delete a ruler"""
+    deleteRuler(id: ID!): DeleteResponse!
+
+    """Associate a castle with a ruler"""
+    addCastleToRuler(rulerId: ID!, castleId: ID!): Ruler!
+
+    """Remove castle association from a ruler"""
+    removeCastleFromRuler(rulerId: ID!, castleId: ID!): Ruler!
+  }
+`

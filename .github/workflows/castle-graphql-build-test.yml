@@ -1,0 +1,54 @@
+name: Castle GraphQL - Build and Test
+
+on:
+  push:
+    paths:
+      - 'examples/castle-graphql/**'
+      - '.github/workflows/castle-graphql-build-test.yml'
+    branches: [ main, develop ]
+  pull_request:
+    paths:
+      - 'examples/castle-graphql/**'
+      - '.github/workflows/castle-graphql-build-test.yml'
+    branches: [ main ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/castle-graphql
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: examples/castle-graphql/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: TypeScript compilation
+      run: npm run build:all
+
+    - name: Run provider verification tests
+      env:
+        ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
+        ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
+        NODE_ENV: test
+      run: npm test
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: castle-graphql-build-artifacts
+        path: |
+          examples/castle-graphql/dist/
+          examples/castle-graphql/package.json
+          examples/castle-graphql/package-lock.json
+        retention-days: 30

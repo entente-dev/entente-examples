@@ -1,0 +1,37 @@
+[
+  {
+    "id": "castle-versailles-001",
+    "name": "Château de Versailles",
+    "region": "Île-de-France",
+    "yearBuilt": 1623,
+    "description": "Famous royal residence known for its opulent architecture and gardens"
+  },
+  {
+    "id": "castle-fontainebleau-002",
+    "name": "Château de Fontainebleau",
+    "region": "Île-de-France",
+    "yearBuilt": 1137,
+    "description": "Historic royal palace with stunning Renaissance and classical architecture"
+  },
+  {
+    "id": "castle-chambord-003",
+    "name": "Château de Chambord",
+    "region": "Centre-Val de Loire",
+    "yearBuilt": 1519,
+    "description": "Iconic French Renaissance castle with distinctive French defensive architecture"
+  },
+  {
+    "id": "castle-chenonceau-004",
+    "name": "Château de Chenonceau",
+    "region": "Centre-Val de Loire",
+    "yearBuilt": 1514,
+    "description": "Elegant castle spanning the River Cher, known as the Ladies' Castle"
+  },
+  {
+    "id": "castle-carcassonne-005",
+    "name": "Château de Carcassonne",
+    "region": "Occitanie",
+    "yearBuilt": 1130,
+    "description": "Medieval fortified city with impressive defensive walls and towers"
+  }
+]

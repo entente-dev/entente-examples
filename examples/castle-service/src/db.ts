@@ -13,8 +13,10 @@ export interface CreateCastleRequest {
   description?: string;
 }
 
-let castles: Castle[] = [];
-let sourceCastles: Castle[] = [];
+import castleData from './castles.json' assert { type: 'json' }
+
+let castles: Castle[] = [...castleData];
+let sourceCastles: Castle[] = [...castleData];
 
 export const getAllCastles = (): Castle[] => {
   return [...castles];

@@ -1,0 +1,179 @@
+name: Castle GraphQL - Deploy
+
+on:
+  push:
+    paths:
+      - 'examples/castle-graphql/**'
+      - '.github/workflows/castle-graphql-deploy.yml'
+    branches: [ main ]
+
+jobs:
+  # Development deployment
+  deploy-development:
+    runs-on: ubuntu-latest
+    environment: development
+    defaults:
+      run:
+        working-directory: examples/castle-graphql
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: examples/castle-graphql/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build for Worker
+      run: npm run build:worker
+
+    - name: Install Entente CLI
+      run: npm install -g @entente/cli@latest
+
+    - name: Check deployment readiness
+      env:
+        ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
+        ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
+      run: npm run can-i-deploy
+
+    - name: Deploy to Cloudflare Workers (Development)
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      run: npm run deploy:dev
+
+    - name: Record deployment in Entente
+      env:
+        ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
+        ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
+      run: npm run record:deployment
+
+    - name: Run smoke tests
+      env:
+        CASTLE_GRAPHQL_URL: ${{ secrets.CASTLE_GRAPHQL_DEV_URL }}
+      run: |
+        # Simple GraphQL health check
+        curl -X POST "$CASTLE_GRAPHQL_URL/graphql" \
+          -H "Content-Type: application/json" \
+          -d '{"query": "{ health }"}' \
+          --fail-with-body
+
+  # Staging deployment (after development succeeds)
+  deploy-staging:
+    needs: deploy-development
+    runs-on: ubuntu-latest
+    environment: staging
+    defaults:
+      run:
+        working-directory: examples/castle-graphql
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: examples/castle-graphql/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build for Worker
+      run: npm run build:worker
+
+    - name: Install Entente CLI
+      run: npm install -g @entente/cli@latest
+
+    - name: Check deployment readiness
+      env:
+        ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
+        ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
+      run: npm run can-i-deploy
+
+    - name: Deploy to Cloudflare Workers (Staging)
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      run: npm run deploy:staging
+
+    - name: Record deployment in Entente
+      env:
+        ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
+        ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
+      run: npm run record:deployment
+
+    - name: Run smoke tests
+      env:
+        CASTLE_GRAPHQL_URL: ${{ secrets.CASTLE_GRAPHQL_STAGING_URL }}
+      run: |
+        # Simple GraphQL health check
+        curl -X POST "$CASTLE_GRAPHQL_URL/graphql" \
+          -H "Content-Type: application/json" \
+          -d '{"query": "{ health }"}' \
+          --fail-with-body
+
+  # Production deployment (after staging succeeds)
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        working-directory: examples/castle-graphql
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: examples/castle-graphql/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build for Worker
+      run: npm run build:worker
+
+    - name: Install Entente CLI
+      run: npm install -g @entente/cli@latest
+
+    - name: Check deployment readiness
+      env:
+        ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
+        ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
+      run: npm run can-i-deploy
+
+    - name: Deploy to Cloudflare Workers (Production)
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      run: npm run deploy:prod
+
+    - name: Record deployment in Entente
+      env:
+        ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
+        ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
+      run: npm run record:deployment
+
+    - name: Run smoke tests
+      env:
+        CASTLE_GRAPHQL_URL: ${{ secrets.CASTLE_GRAPHQL_PROD_URL }}
+      run: |
+        # Simple GraphQL health check
+        curl -X POST "$CASTLE_GRAPHQL_URL/graphql" \
+          -H "Content-Type: application/json" \
+          -d '{"query": "{ health }"}' \
+          --fail-with-body

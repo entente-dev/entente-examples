@@ -1,0 +1,134 @@
+[
+  {
+    "id": "ruler-louis-xiv-001",
+    "name": "Louis XIV",
+    "title": "The Sun King",
+    "reignStart": 1643,
+    "reignEnd": 1715,
+    "house": "Bourbon",
+    "castleIds": ["castle-versailles-001"],
+    "description": "Known for his absolute monarchy and the construction of the Palace of Versailles. His reign of 72 years is the longest of any European monarch.",
+    "achievements": [
+      "Longest reigning European monarch (72 years)",
+      "Built the magnificent Palace of Versailles",
+      "Patron of arts and literature",
+      "Established French cultural dominance in Europe",
+      "Centralized royal power in France"
+    ]
+  },
+  {
+    "id": "ruler-francois-i-002",
+    "name": "François I",
+    "title": "King of France",
+    "reignStart": 1515,
+    "reignEnd": 1547,
+    "house": "Valois-Angoulême",
+    "castleIds": ["castle-fontainebleau-002", "castle-chambord-003"],
+    "description": "Renaissance monarch who brought Italian Renaissance culture to France and was a great patron of the arts.",
+    "achievements": [
+      "Brought Renaissance culture to France",
+      "Patron of Leonardo da Vinci",
+      "Founded the Collège de France",
+      "Established the first royal library",
+      "Built and renovated numerous châteaux"
+    ]
+  },
+  {
+    "id": "ruler-henry-ii-003",
+    "name": "Henri II",
+    "title": "King of France",
+    "reignStart": 1547,
+    "reignEnd": 1559,
+    "house": "Valois-Angoulême",
+    "castleIds": ["castle-chenonceau-004"],
+    "description": "Son of François I, continued Renaissance building projects and was married to Catherine de' Medici.",
+    "achievements": [
+      "Continued French Renaissance building",
+      "Expanded French territory",
+      "Patron of architecture and arts",
+      "Strengthened royal authority"
+    ]
+  },
+  {
+    "id": "ruler-catherine-medici-004",
+    "name": "Catherine de' Medici",
+    "title": "Queen of France",
+    "reignStart": 1547,
+    "reignEnd": 1589,
+    "house": "Medici (by birth), Valois (by marriage)",
+    "castleIds": ["castle-chenonceau-004"],
+    "description": "Queen consort and later regent of France, known for her political influence and patronage of the arts.",
+    "achievements": [
+      "Influential regent during religious wars",
+      "Patron of arts and architecture",
+      "Promoted French cuisine and fashion",
+      "Built the Tuileries Palace"
+    ]
+  },
+  {
+    "id": "ruler-louis-xiii-005",
+    "name": "Louis XIII",
+    "title": "The Just",
+    "reignStart": 1610,
+    "reignEnd": 1643,
+    "house": "Bourbon",
+    "castleIds": ["castle-versailles-001"],
+    "description": "Father of Louis XIV, established the foundations of absolute monarchy with Cardinal Richelieu.",
+    "achievements": [
+      "Strengthened royal authority",
+      "Defeated Protestant strongholds",
+      "Expanded French territory",
+      "Established foundations for absolute monarchy"
+    ]
+  },
+  {
+    "id": "ruler-philip-augustus-006",
+    "name": "Philippe Auguste",
+    "title": "Philip II of France",
+    "reignStart": 1180,
+    "reignEnd": 1223,
+    "house": "Capetian",
+    "castleIds": ["castle-fontainebleau-002"],
+    "description": "First French king to use the title 'King of France' rather than 'King of the Franks', greatly expanded royal domain.",
+    "achievements": [
+      "Tripled the size of French royal domain",
+      "Defeated John of England at Bouvines",
+      "Built walls around Paris",
+      "Established permanent royal administration",
+      "Participated in the Third Crusade"
+    ]
+  },
+  {
+    "id": "ruler-louis-ix-007",
+    "name": "Louis IX",
+    "title": "Saint Louis",
+    "reignStart": 1226,
+    "reignEnd": 1270,
+    "house": "Capetian",
+    "castleIds": ["castle-carcassonne-005"],
+    "description": "Only French king to be canonized, known for his piety, justice reforms, and crusading activities.",
+    "achievements": [
+      "Canonized as a saint",
+      "Established fair legal system",
+      "Led two crusades",
+      "Built Sainte-Chapelle",
+      "Reformed royal administration"
+    ]
+  },
+  {
+    "id": "ruler-diane-poitiers-008",
+    "name": "Diane de Poitiers",
+    "title": "Duchess of Valentinois",
+    "reignStart": 1547,
+    "reignEnd": 1559,
+    "house": "Saint-Vallier",
+    "castleIds": ["castle-chenonceau-004"],
+    "description": "Mistress of King Henri II, received Château de Chenonceau as a gift and oversaw its famous bridge construction.",
+    "achievements": [
+      "Influential court figure during Henri II's reign",
+      "Commissioned the iconic bridge at Chenonceau",
+      "Patron of Renaissance arts",
+      "Influential in court politics and culture"
+    ]
+  }
+]

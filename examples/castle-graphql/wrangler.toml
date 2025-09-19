@@ -1,0 +1,21 @@
+name = "castle-graphql"
+main = "dist/worker.js"
+compatibility_date = "2024-09-23"
+
+# Environment-specific configurations
+[env.development]
+name = "castle-graphql-dev"
+vars = { ENVIRONMENT = "development" }
+
+[env.staging]
+name = "castle-graphql-staging"
+vars = { ENVIRONMENT = "staging" }
+
+[env.production]
+name = "castle-graphql-prod"
+vars = { ENVIRONMENT = "production" }
+
+# Environment variables (set via CLI or dashboard)
+# wrangler secret put ENTENTE_SERVICE_URL --env development
+# wrangler secret put ENTENTE_API_KEY --env development
+# (repeat for staging and production)
