@@ -1,0 +1,19 @@
+{
+  "name": "entente-examples",
+  "version": "1.0.0",
+  "description": "Example applications demonstrating Entente contract testing",
+  "private": true,
+  "scripts": {
+    "install:all": "pnpm install",
+    "build:all": "pnpm -r build",
+    "test:all": "pnpm -r test",
+    "dev:castle-service": "pnpm --filter castle-service dev",
+    "dev:castle-client": "pnpm --filter castle-client dev",
+    "test:castle-service": "pnpm --filter castle-service test",
+    "test:castle-client": "pnpm --filter castle-client test"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@9.0.0"
+}
