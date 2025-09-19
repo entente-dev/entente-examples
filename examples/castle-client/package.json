@@ -1,0 +1,53 @@
+{
+  "name": "castle-client",
+  "version": "0.1.4",
+  "description": "Example consumer service that uses castle-service - demonstrating Entente contract testing",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:worker": "tsc src/worker.ts --outDir dist --target es2022 --module es2022 --moduleResolution bundler --allowSyntheticDefaultImports",
+    "dev": "wrangler dev",
+    "dev:node": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "test": "vitest run test/consumer.test.ts",
+    "deploy": "wrangler deploy",
+    "deploy:dev": "wrangler deploy --env development",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:prod": "wrangler deploy --env production",
+    "register:consumer": "entente register-service --type consumer --service castle-client --spec spec/openapi.json --version 0.1.0 --environment test",
+    "upload:spec": "entente upload-spec --service castle-client --version 0.1.0 --environment test --spec spec/openapi.json",
+    "deploy:consumer": "entente deploy-service --type consumer --service castle-client --version 0.1.3 --environment test",
+    "record:deployment": "entente record-deployment --service castle-client --version 0.1.0 --environment test",
+    "can-i-deploy": "entente can-i-deploy --type consumer --service castle-client --environment test",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@entente/consumer": "^0.1.11",
+    "@entente/fixtures": "^0.1.11",
+    "@entente/types": "^0.1.11",
+    "@hono/node-server": "^1.13.5",
+    "@hono/swagger-ui": "^0.4.1",
+    "dotenv": "^17.2.2",
+    "hono": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250913.0",
+    "@entente/cli": "^0.1.11",
+    "@types/node": "^24.0.0",
+    "swagger-ui-dist": "^5.17.14",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "wrangler": "latest"
+  },
+  "keywords": [
+    "entente",
+    "contract-testing",
+    "example",
+    "consumer",
+    "hono",
+    "client"
+  ]
+}
