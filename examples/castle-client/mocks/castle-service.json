@@ -49,6 +49,13 @@
   "createCastle": {
     "success": {
       "status": 201,
+      "request": {
+        "body": {
+          "name": "Château de Test",
+          "region": "Test Region",
+          "yearBuilt": 1500
+        }
+      },
       "body": {
         "id": "550e8400-e29b-41d4-a716-446655440003",
         "name": "Château de Test",
@@ -59,6 +66,13 @@
     },
     "validationError": {
       "status": 400,
+      "request": {
+        "body": {
+          "name": "",
+          "region": "Test Region",
+          "yearBuilt": 999
+        }
+      },
       "body": {
         "error": "validation_failed",
         "message": "Castle name cannot be empty and year must be after 1000"

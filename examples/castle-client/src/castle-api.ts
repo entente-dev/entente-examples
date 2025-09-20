@@ -5,6 +5,22 @@ export interface Castle {
   yearBuilt: number
 }
 
+export interface Ruler {
+  id: string
+  name: string
+  title: string
+  reignStart: number
+  reignEnd?: number
+  house: string
+  castleIds: string[]
+  description?: string
+  achievements: string[]
+}
+
+export interface CastleWithRulers extends Castle {
+  rulers: Ruler[]
+}
+
 export interface CreateCastleRequest {
   name: string
   region: string
@@ -17,7 +33,11 @@ export interface CastleApiError {
 }
 
 export class CastleApiClient {
-  constructor(private readonly baseUrl: string, private readonly serviceBinding?: any) {}
+  constructor(
+    private readonly baseUrl: string,
+    private readonly serviceBinding?: any,
+    private readonly rulersApiUrl?: string
+  ) {}
 
   async getAllCastles(): Promise<Castle[]> {
     try {
@@ -128,5 +148,92 @@ export class CastleApiClient {
   async getOldestCastles(limit = 5): Promise<Castle[]> {
     const allCastles = await this.getAllCastles()
     return allCastles.sort((a, b) => a.yearBuilt - b.yearBuilt).slice(0, limit)
+  }
+
+  async getCastleWithRulers(castleId: string): Promise<CastleWithRulers> {
+    if (!this.rulersApiUrl) {
+      throw new Error('Rulers API URL not configured. Cannot fetch ruler data.')
+    }
+
+    // Get castle data from castle-service
+    const castle = await this.getCastleById(castleId)
+
+    // Get associated rulers from castle-graphql
+    const { RulersGraphQLClient } = await import('./graphql-api.js')
+    const rulersClient = new RulersGraphQLClient(this.rulersApiUrl)
+    const rulers = await rulersClient.getRulersByCastle(castleId)
+
+    return {
+      ...castle,
+      rulers
+    }
+  }
+
+  async getAllCastlesWithRulers(): Promise<CastleWithRulers[]> {
+    if (!this.rulersApiUrl) {
+      throw new Error('Rulers API URL not configured. Cannot fetch ruler data.')
+    }
+
+    // Get all castles from castle-service
+    const castles = await this.getAllCastles()
+
+    // Get rulers for each castle from castle-graphql
+    const { RulersGraphQLClient } = await import('./graphql-api.js')
+    const rulersClient = new RulersGraphQLClient(this.rulersApiUrl)
+
+    const castlesWithRulers: CastleWithRulers[] = []
+
+    for (const castle of castles) {
+      try {
+        const rulers = await rulersClient.getRulersByCastle(castle.id)
+        castlesWithRulers.push({
+          ...castle,
+          rulers
+        })
+      } catch (error) {
+        console.error(`[CastleApiClient] Failed to get rulers for castle ${castle.id}:`, error)
+        // Include castle with empty rulers array if rulers fetch fails
+        castlesWithRulers.push({
+          ...castle,
+          rulers: []
+        })
+      }
+    }
+
+    return castlesWithRulers
+  }
+
+  async getCastlesByRegionWithRulers(region: string): Promise<CastleWithRulers[]> {
+    if (!this.rulersApiUrl) {
+      throw new Error('Rulers API URL not configured. Cannot fetch ruler data.')
+    }
+
+    // Get castles by region from castle-service
+    const castles = await this.getCastlesByRegion(region)
+
+    // Get rulers for each castle from castle-graphql
+    const { RulersGraphQLClient } = await import('./graphql-api.js')
+    const rulersClient = new RulersGraphQLClient(this.rulersApiUrl)
+
+    const castlesWithRulers: CastleWithRulers[] = []
+
+    for (const castle of castles) {
+      try {
+        const rulers = await rulersClient.getRulersByCastle(castle.id)
+        castlesWithRulers.push({
+          ...castle,
+          rulers
+        })
+      } catch (error) {
+        console.error(`[CastleApiClient] Failed to get rulers for castle ${castle.id}:`, error)
+        // Include castle with empty rulers array if rulers fetch fails
+        castlesWithRulers.push({
+          ...castle,
+          rulers: []
+        })
+      }
+    }
+
+    return castlesWithRulers
   }
 }

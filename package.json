@@ -3,17 +3,26 @@
   "version": "1.0.0",
   "description": "Example applications demonstrating Entente contract testing",
   "private": true,
+  "type": "module",
   "scripts": {
     "install:all": "pnpm install",
     "build:all": "pnpm -r build",
-    "test:all": "pnpm -r test",
+    "test": "pnpm -r test",
     "dev:castle-service": "pnpm --filter castle-service dev",
     "dev:castle-client": "pnpm --filter castle-client dev",
     "test:castle-service": "pnpm --filter castle-service test",
-    "test:castle-client": "pnpm --filter castle-client test"
+    "test:castle-client": "pnpm --filter castle-client test",
+    "link:local": "node scripts/link-local.js",
+    "link:latest": "node scripts/link-latest.js",
+    "check:links": "node scripts/check-local-links.js",
+    "prepare": "husky"
   },
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@9.0.0"
+  "packageManager": "pnpm@9.0.0",
+  "devDependencies": {
+    "glob": "^11.0.3",
+    "husky": "^9.1.7"
+  }
 }

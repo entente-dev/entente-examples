@@ -6,40 +6,38 @@ import dotenv from 'dotenv'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { CastleApiClient } from '../src/castle-api.js'
 
-// Load environment variables from .env file
 dotenv.config()
 
-describe('Castle Client Consumer Contract Tests', () => {
+describe('Castle Service Consumer Contract Tests', () => {
   let client: ReturnType<typeof createClient>
-  let mock: Awaited<ReturnType<typeof client.createMock>>
+  let castleMock: Awaited<ReturnType<typeof client.createMock>>
   let castleApi: CastleApiClient
 
   beforeAll(async () => {
-    // Load local mock data
-    const mockDataPath = join(process.cwd(), 'mocks', 'castle-service.json')
-    const localMockData: LocalMockData = JSON.parse(readFileSync(mockDataPath, 'utf-8'))
+    const castleMockDataPath = join(process.cwd(), 'mocks', 'castle-service.json')
+    const castleLocalMockData: LocalMockData = JSON.parse(readFileSync(castleMockDataPath, 'utf-8'))
 
     client = createClient({
       serviceUrl: process.env.ENTENTE_SERVICE_URL || '',
       apiKey: process.env.ENTENTE_API_KEY || '',
       consumer: 'castle-client',
-      environment: 'test', // Test context (not deployment environment)
+      environment: 'test',
       recordingEnabled: process.env.CI === 'true',
     })
 
-    mock = await client.createMock('castle-service', '0.1.0', {
+    castleMock = await client.createMock('castle-service', '0.1.0', {
       useFixtures: true,
       validateRequests: true,
       validateResponses: true,
-      localMockData,
+      localMockData: castleLocalMockData,
     })
 
-    castleApi = new CastleApiClient(mock.url)
+    castleApi = new CastleApiClient(castleMock.url)
   })
 
   afterAll(async () => {
-    if (mock) {
-      await mock.close()
+    if (castleMock) {
+      await castleMock.close()
     }
   })
 
@@ -140,8 +138,8 @@ describe('Castle Client Consumer Contract Tests', () => {
   })
 
   describe('Mock Server Features', () => {
-    it('should use fixtures if available', () => {
-      const fixtures = mock.getFixtures()
+    it('should use fixtures if available for castle service', () => {
+      const fixtures = castleMock.getFixtures()
 
       expect(fixtures).toBeDefined()
       expect(Array.isArray(fixtures)).toBe(true)

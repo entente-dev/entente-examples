@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { createProvider } from "@entente/provider";
 import { serve } from "@hono/node-server";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -33,8 +34,17 @@ describe("Rulers GraphQL Service Provider Verification", () => {
 
       // Provide database setup callback for rulers
       dataSetupCallback: async (fixtures) => {
+        console.log(`🔧 [DEBUG] Normalized fixtures received:`)
+        console.log(`  Available entity types:`, Object.keys(fixtures.entities))
+        console.log(`  Total fixtures metadata:`, fixtures.metadata)
+
         // Extract ruler entities from normalized fixtures
         const rulerEntities = fixtures.entities.Ruler || [];
+        console.log(`  Ruler entities found:`, rulerEntities.length)
+
+        if (rulerEntities.length > 0) {
+          console.log(`  First ruler entity:`, JSON.stringify(rulerEntities[0], null, 2))
+        }
 
         // Transform fixture format to Ruler interface
         const rulers = rulerEntities.map(entity => ({
