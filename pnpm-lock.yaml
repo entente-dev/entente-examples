@@ -18,14 +18,14 @@ importers:
   examples/castle-client:
     dependencies:
       '@entente/consumer':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@entente/fixtures':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@entente/types':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@hono/node-server':
         specifier: ^1.13.5
         version: 1.19.3(hono@4.9.8)
@@ -46,8 +46,8 @@ importers:
         specifier: ^4.20250913.0
         version: 4.20250919.0
       '@entente/cli':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@types/node':
         specifier: ^24.0.0
         version: 24.5.2
@@ -70,14 +70,14 @@ importers:
   examples/castle-graphql:
     dependencies:
       '@entente/fixtures':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@entente/provider':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@entente/types':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@hono/node-server':
         specifier: ^1.13.5
         version: 1.19.3(hono@4.9.8)
@@ -98,8 +98,8 @@ importers:
         specifier: ^4.20250913.0
         version: 4.20250919.0
       '@entente/cli':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@types/node':
         specifier: ^24.0.0
         version: 24.5.2
@@ -119,14 +119,14 @@ importers:
   examples/castle-service:
     dependencies:
       '@entente/fixtures':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@entente/provider':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@entente/types':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@hono/node-server':
         specifier: ^1.13.5
         version: 1.19.3(hono@4.9.8)
@@ -144,8 +144,8 @@ importers:
         specifier: ^4.20250913.0
         version: 4.20250919.0
       '@entente/cli':
-        specifier: ^0.1.12
-        version: 0.1.12
+        specifier: ^0.1.13
+        version: 0.1.13
       '@types/node':
         specifier: ^24.0.0
         version: 24.5.2
@@ -220,21 +220,21 @@ packages:
   '@emnapi/runtime@1.5.0':
     resolution: {integrity: sha512-97/BJ3iXHww3djw6hYIfErCZFee7qCtrneuLa20UXFCOTCfBM2cvQHjWJ2EG0s0MtdNwInarqCTz35i4wWXHsQ==}
 
-  '@entente/cli@0.1.12':
-    resolution: {integrity: sha512-S7mhui55RvFQOc5jFmkXOxFstqMF3WejmCP0OUyKxAafSSLYVPY58sjmSPGtcmEj0H760mbF3hR/NM9kc3oSeg==}
+  '@entente/cli@0.1.13':
+    resolution: {integrity: sha512-zEweBNo0arY/Vgt44AiTfj962L0TF3A2PpJxco5b99zBspZpV7KAi/zoQWtZjabRI7DnfvE7TY6X7YRBrP4XuA==}
     hasBin: true
 
-  '@entente/consumer@0.1.12':
-    resolution: {integrity: sha512-vMEZhBy2h1gXd6yjF+H+Tx5TJeraxmv8MJ87FW4Z3lnINIW+Skwenkwv80owIADQ8L1FsABx/DTJxEyJKXv+4A==}
+  '@entente/consumer@0.1.13':
+    resolution: {integrity: sha512-WmjienP1EbViT71IdpqRjgu9Z7bF9nYAo9CZ/ddaJkw96n5wHYvwcCvirrkKCgRrMAOsr0G+9W4wiwJyHTgPog==}
 
-  '@entente/fixtures@0.1.12':
-    resolution: {integrity: sha512-bqM3O36baSeN5Osuy0KRnutpP7UV+XcV4KEsIPf/gmu8iDr5SiW0q/EQsvVCH0Pn0ELQPmHVNCQNqxPBl8T3jQ==}
+  '@entente/fixtures@0.1.13':
+    resolution: {integrity: sha512-MX5e5ht9IG8OFiP2tI3YltkKyZvPnzTo5CoMFQuLrOh8LkKPn/Z0wUX70epSEywEnnDjAGtrAB1e8cMnvb+fpA==}
 
-  '@entente/provider@0.1.12':
-    resolution: {integrity: sha512-nYfxe/TsPWK7ruJYhx0ROOjjFhwhLDhRJlCj+P56eFRvmgKtdF7oiJDX4FuzOnPh5qHdO7tTu9HoXa4Dfl83fA==}
+  '@entente/provider@0.1.13':
+    resolution: {integrity: sha512-hqLb5goY8s0WWNCpwCnFDmoU62WTRRr0xbcwv/fM/frdcwP+xRmrG5IFQpaW3AkZKGK5BKVdPDWbdkYd+qtskw==}
 
-  '@entente/types@0.1.12':
-    resolution: {integrity: sha512-ja1QKp8pSP9n31/9KxvZMlZiWM51XecNrRLkyxLgCQdJhhQUDxPr/AY7tzHougQ0usV9SyQP86oCuo8XGNgmmA==}
+  '@entente/types@0.1.13':
+    resolution: {integrity: sha512-xOabS//qmR2RILpQbjlioaHeI+1J1N/ORl1QPn16C4WP1oCep3jvFWgAn0pC5LZiQ30W2OAWVprDzlFkBidyHw==}
 
   '@envelop/core@5.3.2':
     resolution: {integrity: sha512-06Mu7fmyKzk09P2i2kHpGfItqLLgCq7uO5/nX4fc/iHMplWPNuAx4iYR+WXUQoFHDnP6EUbceQNQ5iyeMz9f3g==}
@@ -1666,35 +1666,35 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@entente/cli@0.1.12':
+  '@entente/cli@0.1.13':
     dependencies:
-      '@entente/fixtures': 0.1.12
-      '@entente/types': 0.1.12
+      '@entente/fixtures': 0.1.13
+      '@entente/types': 0.1.13
       chalk: 5.6.2
       commander: 12.1.0
       open: 10.2.0
 
-  '@entente/consumer@0.1.12':
+  '@entente/consumer@0.1.13':
     dependencies:
-      '@entente/fixtures': 0.1.12
-      '@entente/types': 0.1.12
+      '@entente/fixtures': 0.1.13
+      '@entente/types': 0.1.13
       ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@entente/fixtures@0.1.12':
+  '@entente/fixtures@0.1.13':
     dependencies:
-      '@entente/types': 0.1.12
+      '@entente/types': 0.1.13
       graphql: 16.11.0
       js-yaml: 4.1.0
       path-to-regexp: 6.3.0
 
-  '@entente/provider@0.1.12':
+  '@entente/provider@0.1.13':
     dependencies:
-      '@entente/types': 0.1.12
+      '@entente/types': 0.1.13
 
-  '@entente/types@0.1.12': {}
+  '@entente/types@0.1.13': {}
 
   '@envelop/core@5.3.2':
     dependencies:

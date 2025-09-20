@@ -25,9 +25,9 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@entente/fixtures": "^0.1.12",
-    "@entente/provider": "^0.1.12",
-    "@entente/types": "^0.1.12",
+    "@entente/fixtures": "^0.1.13",
+    "@entente/provider": "^0.1.13",
+    "@entente/types": "^0.1.13",
     "@hono/node-server": "^1.13.5",
     "@hono/swagger-ui": "^0.4.1",
     "dotenv": "^17.2.2",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250913.0",
-    "@entente/cli": "^0.1.12",
+    "@entente/cli": "^0.1.13",
     "@types/node": "^24.0.0",
     "swagger-ui-dist": "^5.17.14",
     "tsx": "^4.19.2",
