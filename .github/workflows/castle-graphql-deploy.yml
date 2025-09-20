@@ -23,15 +23,18 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
-        cache: 'npm'
-        cache-dependency-path: examples/castle-graphql/package-lock.json
+        node-version: '24'
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9.0.0
 
     - name: Install dependencies
-      run: npm ci
+      run: pnpm --filter castle-graphql install
 
     - name: Build for Worker
-      run: npm run build:worker
+      run: pnpm --filter castle-graphql build:worker
 
     - name: Install Entente CLI
       run: npm install -g @entente/cli@latest
@@ -40,19 +43,19 @@ jobs:
       env:
         ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
         ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
-      run: npm run can-i-deploy
+      run: pnpm --filter castle-graphql can-i-deploy
 
     - name: Deploy to Cloudflare Workers (Development)
       env:
         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      run: npm run deploy:dev
+      run: pnpm --filter castle-graphql deploy:dev
 
     - name: Record deployment in Entente
       env:
         ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
         ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
-      run: npm run record:deployment
+      run: pnpm --filter castle-graphql record:deployment
 
     - name: Run smoke tests
       env:
@@ -80,15 +83,18 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
-        cache: 'npm'
-        cache-dependency-path: examples/castle-graphql/package-lock.json
+        node-version: '24'
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9.0.0
 
     - name: Install dependencies
-      run: npm ci
+      run: pnpm --filter castle-graphql install
 
     - name: Build for Worker
-      run: npm run build:worker
+      run: pnpm --filter castle-graphql build:worker
 
     - name: Install Entente CLI
       run: npm install -g @entente/cli@latest
@@ -97,19 +103,19 @@ jobs:
       env:
         ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
         ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
-      run: npm run can-i-deploy
+      run: pnpm --filter castle-graphql can-i-deploy
 
     - name: Deploy to Cloudflare Workers (Staging)
       env:
         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      run: npm run deploy:staging
+      run: pnpm --filter castle-graphql deploy:staging
 
     - name: Record deployment in Entente
       env:
         ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
         ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
-      run: npm run record:deployment
+      run: pnpm --filter castle-graphql record:deployment
 
     - name: Run smoke tests
       env:
@@ -137,15 +143,18 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
-        cache: 'npm'
-        cache-dependency-path: examples/castle-graphql/package-lock.json
+        node-version: '24'
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9.0.0
 
     - name: Install dependencies
-      run: npm ci
+      run: pnpm --filter castle-graphql install
 
     - name: Build for Worker
-      run: npm run build:worker
+      run: pnpm --filter castle-graphql build:worker
 
     - name: Install Entente CLI
       run: npm install -g @entente/cli@latest
@@ -154,19 +163,19 @@ jobs:
       env:
         ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
         ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
-      run: npm run can-i-deploy
+      run: pnpm --filter castle-graphql can-i-deploy
 
     - name: Deploy to Cloudflare Workers (Production)
       env:
         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      run: npm run deploy:prod
+      run: pnpm --filter castle-graphql deploy:prod
 
     - name: Record deployment in Entente
       env:
         ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
         ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
-      run: npm run record:deployment
+      run: pnpm --filter castle-graphql record:deployment
 
     - name: Run smoke tests
       env:

@@ -26,22 +26,25 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
-        cache: 'npm'
-        cache-dependency-path: examples/castle-graphql/package-lock.json
+        node-version: '24'
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9.0.0
 
     - name: Install dependencies
-      run: npm ci
+      run: pnpm --filter castle-graphql install
 
     - name: TypeScript compilation
-      run: npm run build:all
+      run: pnpm --filter castle-graphql build:all
 
     - name: Run provider verification tests
       env:
         ENTENTE_SERVICE_URL: ${{ secrets.ENTENTE_SERVICE_URL }}
         ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
         NODE_ENV: test
-      run: npm test
+      run: pnpm --filter castle-graphql test
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
@@ -50,5 +53,4 @@ jobs:
         path: |
           examples/castle-graphql/dist/
           examples/castle-graphql/package.json
-          examples/castle-graphql/package-lock.json
         retention-days: 30
