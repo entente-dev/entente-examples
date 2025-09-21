@@ -46,7 +46,6 @@ jobs:
         run: |
           VERSION=$(node -p "require('./package.json').version")
           npx entente can-i-deploy \
-            --type consumer \
             --service castle-graphql \
             --version $VERSION \
             --environment development
@@ -70,8 +69,7 @@ jobs:
           npx entente deploy-service \
             --service castle-graphql \
             --version $VERSION \
-            --environment development \
-            --type provider
+            --environment development
 
       - name: Run smoke tests
         run: |
@@ -117,7 +115,6 @@ jobs:
         run: |
           VERSION=$(node -p "require('./package.json').version")
           npx entente can-i-deploy \
-            --type consumer \
             --service castle-graphql \
             --version $VERSION \
             --environment staging
@@ -141,8 +138,7 @@ jobs:
           npx entente deploy-service \
             --service castle-graphql \
             --version $VERSION \
-            --environment staging \
-            --type provider
+            --environment staging
 
       - name: Run smoke tests
         run: |
@@ -188,7 +184,6 @@ jobs:
         run: |
           VERSION=$(node -p "require('./package.json').version")
           npx entente can-i-deploy \
-            --type consumer \
             --service castle-graphql \
             --version $VERSION \
             --environment production
@@ -212,8 +207,7 @@ jobs:
           npx entente deploy-service \
             --service castle-graphql \
             --version $VERSION \
-            --environment production \
-            --type provider
+            --environment production
 
       - name: Run smoke tests
         run: |

@@ -47,10 +47,8 @@ jobs:
       run: |
         VERSION=$(node -p "require('./package.json').version")
         npx entente register-service \
-          --type provider \
           --service castle-graphql \
           --spec spec/schema.graphql \
-          --environment development \
           --version $VERSION
 
     - name: Run provider verification tests
