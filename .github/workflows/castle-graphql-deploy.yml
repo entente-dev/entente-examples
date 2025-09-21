@@ -64,7 +64,7 @@ jobs:
       - name: Record deployment
         env:
           ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
-        working-directory: examples/castle-client
+        working-directory: examples/castle-graphql
         run: |
           VERSION=$(node -p "require('./package.json').version")
           npx entente deploy-service \
@@ -135,7 +135,7 @@ jobs:
       - name: Record deployment
         env:
           ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
-        working-directory: examples/castle-client
+        working-directory: examples/castle-graphql
         run: |
           VERSION=$(node -p "require('./package.json').version")
           npx entente deploy-service \
@@ -206,7 +206,7 @@ jobs:
       - name: Record deployment
         env:
           ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
-        working-directory: examples/castle-client
+        working-directory: examples/castle-graphql
         run: |
           VERSION=$(node -p "require('./package.json').version")
           npx entente deploy-service \
