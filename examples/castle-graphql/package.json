@@ -24,9 +24,9 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@entente/fixtures": "link:../../../entente/packages/fixtures",
-    "@entente/provider": "link:../../../entente/packages/provider",
-    "@entente/types": "link:../../../entente/packages/types",
+    "@entente/fixtures": "^0.1.17",
+    "@entente/provider": "^0.1.17",
+    "@entente/types": "^0.1.17",
     "@hono/node-server": "^1.13.5",
     "dotenv": "^17.2.2",
     "graphql": "^16.9.0",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250913.0",
-    "@entente/cli": "link:../../../entente/packages/cli",
+    "@entente/cli": "^0.1.17",
     "@types/node": "^24.0.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
