@@ -17,7 +17,7 @@ describe('Castle GraphQL Consumer Contract Tests', () => {
     const graphqlMockDataPath = join(process.cwd(), 'mocks', 'castle-graphql.json')
     const graphqlLocalMockData: LocalMockData = JSON.parse(readFileSync(graphqlMockDataPath, 'utf-8'))
 
-    client = createClient({
+    client = await createClient({
       serviceUrl: process.env.ENTENTE_SERVICE_URL || '',
       apiKey: process.env.ENTENTE_API_KEY || '',
       consumer: 'castle-client',

@@ -18,14 +18,14 @@ importers:
   examples/castle-client:
     dependencies:
       '@entente/consumer':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@entente/fixtures':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@entente/types':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@hono/node-server':
         specifier: ^1.13.5
         version: 1.19.3(hono@4.9.8)
@@ -46,8 +46,8 @@ importers:
         specifier: ^4.20250913.0
         version: 4.20250919.0
       '@entente/cli':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@types/node':
         specifier: ^24.0.0
         version: 24.5.2
@@ -70,14 +70,14 @@ importers:
   examples/castle-graphql:
     dependencies:
       '@entente/fixtures':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@entente/provider':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@entente/types':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@hono/node-server':
         specifier: ^1.13.5
         version: 1.19.3(hono@4.9.8)
@@ -98,8 +98,8 @@ importers:
         specifier: ^4.20250913.0
         version: 4.20250919.0
       '@entente/cli':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@types/node':
         specifier: ^24.0.0
         version: 24.5.2
@@ -119,14 +119,14 @@ importers:
   examples/castle-service:
     dependencies:
       '@entente/fixtures':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@entente/provider':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@entente/types':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@hono/node-server':
         specifier: ^1.13.5
         version: 1.19.3(hono@4.9.8)
@@ -144,8 +144,8 @@ importers:
         specifier: ^4.20250913.0
         version: 4.20250919.0
       '@entente/cli':
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.15
+        version: 0.1.15
       '@types/node':
         specifier: ^24.0.0
         version: 24.5.2
@@ -220,21 +220,24 @@ packages:
   '@emnapi/runtime@1.5.0':
     resolution: {integrity: sha512-97/BJ3iXHww3djw6hYIfErCZFee7qCtrneuLa20UXFCOTCfBM2cvQHjWJ2EG0s0MtdNwInarqCTz35i4wWXHsQ==}
 
-  '@entente/cli@0.1.14':
-    resolution: {integrity: sha512-jnr/NRXveh4kA0tVx/qEad6rgfSTF1EtqXZjMfEOUrk17/ORP6EDzLD350sCy/jBpcauQCkSCoJQHRu5F0L/4w==}
+  '@entente/cli@0.1.15':
+    resolution: {integrity: sha512-wE3bmY5fHhUs84L1DuJOQ9qSu7dzSvIU+zaVW4nOyZU6+rh44NJ/LTXI0ml4+Ii0Y0fw1LYI6d5/Exg5YTmKUg==}
     hasBin: true
 
-  '@entente/consumer@0.1.14':
-    resolution: {integrity: sha512-7/x1FVAgD6BBWascqbYHd2KwMstwLEwTF/oPbr2zRoWEDDkGdsS8m2CgnHNOgEuUBq6zHyvJuuFDgJD8CbfHPw==}
+  '@entente/consumer@0.1.15':
+    resolution: {integrity: sha512-hqmYVnM9w4ZDVqtRTndRIHiOmk57G7QV/kofjIPUz3gcDLe//3/1Ws6U1M62H6t0+FBF11mCZMdjynmFrFoscw==}
 
-  '@entente/fixtures@0.1.14':
-    resolution: {integrity: sha512-cDZq9lE+CeW+Z2NfN5tRF/CC29UMOm361mnDOMBhcCAHmQBmbvnPqfq03kKj9tkAe8tOeWO/zJ93KCZHy1yBDw==}
+  '@entente/fixtures@0.1.15':
+    resolution: {integrity: sha512-Z0RLsT/3xOqHyzZwIQOxexZqQq6fIFUE51eH424kXlKfZ18aSle2pbj5kN9EA47oWWTIuJdXOiHbe6OUauWk8Q==}
 
-  '@entente/provider@0.1.14':
-    resolution: {integrity: sha512-EYHjFV9TI0/+34IFSDIFVhOFmXjfRc8//CijrPGZ3qy085Aj++IAWQS90ZKdkxry7rCKIYkgKG+sqfPV8zPIVw==}
+  '@entente/metadata@0.1.1':
+    resolution: {integrity: sha512-hAxrx522IQdpIRu7ZQz5asZMKPr0GRtHZ3QVQx5Qwz6wD2qy+uOZTYK/NrmBhKYR5EeiPyGThzrF5LaXQUb5/w==}
 
-  '@entente/types@0.1.14':
-    resolution: {integrity: sha512-3LOUL9N5qEEgZty5R+S6YsgU+4dSquX4/ONKUD9FGxdKjuxw0rSxfSs6e9OBeOPa04iwzyzPNZ4DlEzcq870/g==}
+  '@entente/provider@0.1.15':
+    resolution: {integrity: sha512-NIC+eTQCYl5pEn2WO3ByfY4LWD0RXVkfGXf5WnsIeL7I7Kyb7KGKeIsHm4sP6QG0YY5Zr7cuwOugHk1pAwdiFA==}
+
+  '@entente/types@0.1.15':
+    resolution: {integrity: sha512-Rpge3niDGUBswrbNhcQlXt1FfaIgwZ8yQKAT6H7AppiBTobTxbzBmZZDZaZIkUIMybGlCMK4W6xAo90bXQCTyw==}
 
   '@envelop/core@5.3.2':
     resolution: {integrity: sha512-06Mu7fmyKzk09P2i2kHpGfItqLLgCq7uO5/nX4fc/iHMplWPNuAx4iYR+WXUQoFHDnP6EUbceQNQ5iyeMz9f3g==}
@@ -1480,6 +1483,9 @@ packages:
     resolution: {integrity: sha512-n1cw8k1k0x4pgA2+9XrOkFydTerNcJ1zWCO5Nn9scWHTD+5tp8dghT2x1uduQePZTZgd3Tupf+x9BxJjeJi77Q==}
     engines: {node: '>=14.0.0'}
 
+  toml@3.0.0:
+    resolution: {integrity: sha512-y/mWCZinnvxjTKYhJ+pYxwD0mRLVvOtdS2Awbgxln6iEnt4rk0yBxeSBHkGJcPucRiG0e55mwWp+g/05rsrd6w==}
+
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
@@ -1666,35 +1672,42 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@entente/cli@0.1.14':
+  '@entente/cli@0.1.15':
     dependencies:
-      '@entente/fixtures': 0.1.14
-      '@entente/types': 0.1.14
+      '@entente/fixtures': 0.1.15
+      '@entente/metadata': 0.1.1
+      '@entente/types': 0.1.15
       chalk: 5.6.2
       commander: 12.1.0
       open: 10.2.0
 
-  '@entente/consumer@0.1.14':
+  '@entente/consumer@0.1.15':
     dependencies:
-      '@entente/fixtures': 0.1.14
-      '@entente/types': 0.1.14
+      '@entente/fixtures': 0.1.15
+      '@entente/metadata': 0.1.1
+      '@entente/types': 0.1.15
       ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@entente/fixtures@0.1.14':
+  '@entente/fixtures@0.1.15':
     dependencies:
-      '@entente/types': 0.1.14
+      '@entente/types': 0.1.15
       graphql: 16.11.0
       js-yaml: 4.1.0
       path-to-regexp: 6.3.0
 
-  '@entente/provider@0.1.14':
+  '@entente/metadata@0.1.1':
     dependencies:
-      '@entente/types': 0.1.14
+      toml: 3.0.0
 
-  '@entente/types@0.1.14': {}
+  '@entente/provider@0.1.15':
+    dependencies:
+      '@entente/metadata': 0.1.1
+      '@entente/types': 0.1.15
+
+  '@entente/types@0.1.15': {}
 
   '@envelop/core@5.3.2':
     dependencies:
@@ -2719,6 +2732,8 @@ snapshots:
   tinyrainbow@1.2.0: {}
 
   tinyspy@3.0.2: {}
+
+  toml@3.0.0: {}
 
   tslib@2.8.1: {}
 

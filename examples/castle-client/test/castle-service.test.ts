@@ -17,7 +17,7 @@ describe('Castle Service Consumer Contract Tests', () => {
     const castleMockDataPath = join(process.cwd(), 'mocks', 'castle-service.json')
     const castleLocalMockData: LocalMockData = JSON.parse(readFileSync(castleMockDataPath, 'utf-8'))
 
-    client = createClient({
+    client = await createClient({
       serviceUrl: process.env.ENTENTE_SERVICE_URL || '',
       apiKey: process.env.ENTENTE_API_KEY || '',
       consumer: 'castle-client',
