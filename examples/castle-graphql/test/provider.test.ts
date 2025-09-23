@@ -73,6 +73,9 @@ describe("Rulers GraphQL Service Provider Verification", () => {
           console.log(
             `👑 Initialized virtual database with ${rulers.length} rulers from fixtures`,
           );
+          console.log(
+            `📋 Ruler IDs loaded: ${rulers.map((r) => r.id).join(", ")}`,
+          );
         },
       });
 
@@ -82,44 +85,34 @@ describe("Rulers GraphQL Service Provider Verification", () => {
 
         // GraphQL state handlers for different operations
         stateHandlers: {
-          listRulers: async () => {
-            console.log("🔄 Resetting rulers to default state");
+          "Query.listRulers": async () => {
             resetRulers();
           },
-          getRuler: async () => {
-            console.log("🔄 Resetting rulers to default state");
+          "Query.getRuler": async () => {
             resetRulers();
           },
-          getRulersByCastle: async () => {
-            console.log("🔄 Resetting rulers to default state");
+          "Query.getRulersByCastle": async () => {
             resetRulers();
           },
-          getRulersByHouse: async () => {
-            console.log("🔄 Resetting rulers to default state");
+          "Query.getRulersByHouse": async () => {
             resetRulers();
           },
-          getRulersByPeriod: async () => {
-            console.log("🔄 Resetting rulers to default state");
+          "Query.getRulersByPeriod": async () => {
             resetRulers();
           },
-          createRuler: async () => {
-            console.log("🔄 Resetting rulers to default state");
+          "Mutation.createRuler": async () => {
             resetRulers();
           },
-          updateRuler: async () => {
-            console.log("🔄 Resetting rulers to default state");
+          "Mutation.updateRuler": async () => {
             resetRulers();
           },
-          deleteRuler: async () => {
-            console.log("🔄 Resetting rulers to default state");
+          "Mutation.deleteRuler": async () => {
             resetRulers();
           },
-          addCastleToRuler: async () => {
-            console.log("🔄 Resetting rulers to default state");
+          "Mutation.addCastleToRuler": async () => {
             resetRulers();
           },
-          removeCastleFromRuler: async () => {
-            console.log("🔄 Resetting rulers to default state");
+          "Mutation.removeCastleFromRuler": async () => {
             resetRulers();
           },
         },

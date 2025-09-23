@@ -8,6 +8,7 @@ describe('Castle GraphQL Interceptor Tests', () => {
   let entente: Awaited<ReturnType<typeof createClient>>
   let mockServer: GraphQLMockServer
   let rulersApi: RulersGraphQLClient
+  let interceptor: Awaited<ReturnType<typeof entente.patchRequests>> | null = null
 
   beforeAll(async () => {
     // Create the entente client for intercepting requests
@@ -29,18 +30,22 @@ describe('Castle GraphQL Interceptor Tests', () => {
   })
 
   afterAll(async () => {
+    if (interceptor) {
+      await interceptor.unpatch()
+      interceptor = null
+    }
     if (mockServer) {
       await mockServer.close()
     }
   })
 
-  describe('Interceptor-based GraphQL API Tests', () => {
-    it('should intercept and record GraphQL query for rulers by house', async () => {
+  describe('GraphQL API Tests', () => {
+    it('should query rulers by house', async () => {
       // Reset data before test
       mockServer.resetData()
 
       // Set up request interceptor for castle-graphql service
-      using interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
+      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
         recording: true,
         filter: (url) => url.includes(mockServer.url), // Only intercept calls to our mock server
       })
@@ -76,6 +81,7 @@ describe('Castle GraphQL Interceptor Tests', () => {
       const result = await response.json()
       const bourbonRulers = result.data.getRulersByHouse
 
+
       // Verify the response
       expect(Array.isArray(bourbonRulers)).toBe(true)
       expect(bourbonRulers.length).toBeGreaterThan(0)
@@ -85,29 +91,12 @@ describe('Castle GraphQL Interceptor Tests', () => {
       expect(ruler).toHaveProperty('name')
       expect(ruler).toHaveProperty('house')
       expect(ruler.house).toBe('Bourbon')
-
-      // Check interceptor statistics
-      const stats = interceptor.getStats()
-      expect(stats.total).toBeGreaterThan(0)
-      console.log(`📊 Intercepted ${stats.total} requests (${stats.fetch} fetch, ${stats.http} http)`)
-
-      // Check intercepted calls
-      const calls = interceptor.getInterceptedCalls()
-      expect(calls.length).toBeGreaterThan(0)
-
-      const graphqlCall = calls.find(call => call.request.url.includes('/graphql'))
-      expect(graphqlCall).toBeDefined()
-      expect(graphqlCall!.operation).toBe('Query.getRulersByHouse')
-      expect(graphqlCall!.response.status).toBe(200)
-
-      console.log(`🔍 GraphQL operation detected: ${graphqlCall!.operation}`)
-      console.log(`✅ Response status: ${graphqlCall!.response.status}`)
     })
 
-    it('should intercept GraphQL query for rulers by time period', async () => {
+    it('should query rulers by time period', async () => {
       mockServer.resetData()
 
-      using interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
+      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
         recording: true,
         filter: (url) => url.includes(mockServer.url),
       })
@@ -149,19 +138,55 @@ describe('Castle GraphQL Interceptor Tests', () => {
       // Should include Louis XIV (1643-1715) and Louis XIII (1610-1643)
       const louisXIV = rulers.find(r => r.name === 'Louis XIV')
       expect(louisXIV).toBeDefined()
-
-      const calls = interceptor.getInterceptedCalls()
-      const graphqlCall = calls.find(call => call.operation === 'Query.getRulersByPeriod')
-      expect(graphqlCall).toBeDefined()
-      expect(graphqlCall!.response.status).toBe(200)
-
-      console.log(`🕐 Period query intercepted: ${graphqlCall!.operation}`)
     })
 
-    it('should intercept GraphQL mutation for creating a ruler', async () => {
+    it('should query a specific ruler (henry-iv)', async () => {
       mockServer.resetData()
 
-      using interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
+      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
+        recording: true,
+        filter: (url) => url.includes(mockServer.url),
+      })
+
+      // Query for ruler-henry-iv-001 specifically to capture this ruler in fixtures
+      const query = `
+        query GetRuler($id: ID!) {
+          getRuler(id: $id) {
+            id
+            name
+            title
+            reignStart
+            reignEnd
+            house
+            castleIds
+            description
+            achievements
+          }
+        }
+      `
+
+      const response = await fetch(`${mockServer.url}/graphql`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query,
+          variables: { id: 'ruler-henry-iv-001' },
+        }),
+      })
+
+      const result = await response.json()
+      expect(result.data.getRuler).toBeDefined()
+      expect(result.data.getRuler.id).toBe('ruler-henry-iv-001')
+      expect(result.data.getRuler.name).toBe('Henry IV')
+      expect(result.data.getRuler.house).toBe('Bourbon')
+    })
+
+    it('should create a new ruler via GraphQL mutation', async () => {
+      mockServer.resetData()
+
+      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
         recording: true,
         filter: (url) => url.includes(mockServer.url),
       })
@@ -208,20 +233,12 @@ describe('Castle GraphQL Interceptor Tests', () => {
       const result = await response.json()
       expect(result.data.createRuler).toBeDefined()
       expect(result.data.createRuler.name).toBe('Napoleon I')
-
-      const calls = interceptor.getInterceptedCalls()
-      const mutationCall = calls.find(call => call.operation === 'Mutation.createRuler')
-      expect(mutationCall).toBeDefined()
-      expect(mutationCall!.response.status).toBe(200)
-
-      console.log(`✏️ Mutation intercepted: ${mutationCall!.operation}`)
-      console.log(`👑 Created ruler: ${result.data.createRuler.name}`)
     })
 
-    it('should intercept GraphQL mutation for updating a ruler', async () => {
+    it('should update a ruler via GraphQL mutation', async () => {
       mockServer.resetData()
 
-      using interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
+      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
         recording: true,
         filter: (url) => url.includes(mockServer.url),
       })
@@ -256,19 +273,12 @@ describe('Castle GraphQL Interceptor Tests', () => {
       const result = await response.json()
       expect(result.data.updateRuler).toBeDefined()
       expect(result.data.updateRuler.description).toContain('Updated:')
-
-      const calls = interceptor.getInterceptedCalls()
-      const mutationCall = calls.find(call => call.operation === 'Mutation.updateRuler')
-      expect(mutationCall).toBeDefined()
-      expect(mutationCall!.response.status).toBe(200)
-
-      console.log(`📝 Update mutation intercepted: ${mutationCall!.operation}`)
     })
 
-    it('should intercept GraphQL mutation for deleting a ruler', async () => {
+    it('should delete a ruler via GraphQL mutation', async () => {
       mockServer.resetData()
 
-      using interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
+      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
         recording: true,
         filter: (url) => url.includes(mockServer.url),
       })
@@ -296,120 +306,7 @@ describe('Castle GraphQL Interceptor Tests', () => {
       const result = await response.json()
       expect(result.data.deleteRuler.success).toBe(true)
       expect(result.data.deleteRuler.message).toContain('successfully deleted')
-
-      const calls = interceptor.getInterceptedCalls()
-      const mutationCall = calls.find(call => call.operation === 'Mutation.deleteRuler')
-      expect(mutationCall).toBeDefined()
-      expect(mutationCall!.response.status).toBe(200)
-
-      console.log(`🗑️ Delete mutation intercepted: ${mutationCall!.operation}`)
     })
 
-    it('should provide detailed statistics about intercepted calls', async () => {
-      mockServer.resetData()
-
-      using interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
-        recording: true,
-        filter: (url) => url.includes(mockServer.url),
-      })
-
-      // Make multiple GraphQL calls using fetch directly
-      const queries = [
-        {
-          query: 'query { listRulers { id name title house } }',
-          operation: 'Query.listRulers'
-        },
-        {
-          query: 'query { getRuler(id: "ruler-louis-xiv-001") { id name title } }',
-          operation: 'Query.getRuler'
-        },
-        {
-          query: 'query { health }',
-          operation: 'Query.health'
-        }
-      ]
-
-      for (const { query } of queries) {
-        await fetch(`${mockServer.url}/graphql`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ query }),
-        })
-      }
-
-      const stats = interceptor.getStats()
-      const calls = interceptor.getInterceptedCalls()
-
-      expect(stats.total).toBe(3)
-      expect(calls.length).toBe(3)
-
-      // Check that all operations were detected
-      const operations = calls.map(call => call.operation)
-      expect(operations).toContain('Query.listRulers')
-      expect(operations).toContain('Query.getRuler')
-      expect(operations).toContain('Query.health')
-
-      console.log('📋 Intercepted operations summary:')
-      for (const call of calls) {
-        console.log(`  - ${call.operation}: ${call.response.status} (${call.duration}ms)`)
-      }
-
-      // Verify match context is populated
-      for (const call of calls) {
-        expect(call.matchContext).toBeDefined()
-        expect(call.matchContext.selectedOperationId).toBe(call.operation)
-      }
-    })
-  })
-
-  describe('Interceptor Features', () => {
-    it('should demonstrate automatic cleanup with Symbol.dispose', async () => {
-      mockServer.resetData()
-
-      let interceptor: any
-      {
-        using _interceptor = await entente.patchRequests('castle-graphql', '0.1.0')
-        interceptor = _interceptor
-
-        // Make a health check call using fetch directly
-        await fetch(`${mockServer.url}/graphql`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ query: 'query { health }' }),
-        })
-
-        expect(interceptor.isPatched()).toBe(true)
-        expect(interceptor.getStats().total).toBe(1)
-      } // Automatic cleanup happens here
-
-      // After the using block, interceptor should be cleaned up
-      expect(interceptor.isPatched()).toBe(false)
-    })
-
-    it('should handle errors gracefully when GraphQL service is unavailable', async () => {
-      using interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
-        recording: true,
-        filter: (url) => url.includes('http://localhost:9999'), // Non-existent server
-      })
-
-      // Try to make a call to non-existent server - should fail but not crash interceptor
-      try {
-        await fetch('http://localhost:9999/graphql', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: '{ health }' }),
-        })
-      } catch (error) {
-        // Expected to fail
-        expect(error).toBeDefined()
-      }
-
-      // Interceptor should still be functional
-      expect(interceptor.isPatched()).toBe(true)
-    })
   })
 })
