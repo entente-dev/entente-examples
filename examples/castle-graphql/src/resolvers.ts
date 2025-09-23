@@ -24,7 +24,8 @@ export const resolvers = {
       console.log(`🔍 GraphQL Query: getRuler(${id})`)
       const ruler = getRulerById(id)
       if (!ruler) {
-        throw new Error(`Ruler with ID ${id} not found`)
+        console.log(`⚠️ Ruler with ID ${id} not found - returning null`)
+        return null
       }
       return ruler
     },
