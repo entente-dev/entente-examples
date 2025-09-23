@@ -49,7 +49,7 @@ export const getRulersByCastle = (castleId: string): Ruler[] => {
 }
 
 export const getRulersByHouse = (house: string): Ruler[] => {
-  return rulers.filter((ruler) => ruler.house.toLowerCase().includes(house.toLowerCase()))
+  return rulers.filter((ruler) => ruler.house && ruler.house.toLowerCase().includes(house.toLowerCase()))
 }
 
 export const getRulersByPeriod = (startYear: number, endYear: number): Ruler[] => {

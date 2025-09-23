@@ -54,18 +54,44 @@ describe("Rulers GraphQL Service Provider Verification", () => {
             );
           }
 
-          // Transform fixture format to Ruler interface
-          const rulers = rulerEntities.map((entity) => ({
-            id: entity.data.id,
-            name: entity.data.name,
-            title: entity.data.title,
-            reignStart: entity.data.reignStart,
-            reignEnd: entity.data.reignEnd,
-            house: entity.data.house,
-            castleIds: entity.data.castleIds || [],
-            description: entity.data.description || "",
-            achievements: entity.data.achievements || [],
-          }));
+          // Transform fixture format to Ruler interface - only load complete entities
+          const rulers = rulerEntities
+            .map((entity) => {
+              // Only load entities that have ALL required fields (complete entities)
+              // This filters out partial entities from update mutations
+              if (!entity.data.id ||
+                  !entity.data.name ||
+                  !entity.data.title ||
+                  !entity.data.house ||
+                  typeof entity.data.reignStart !== 'number') {
+                console.warn(`⚠️  Skipping incomplete ruler entity ${entity.data.id || 'unknown'} - missing required fields:`, {
+                  hasId: !!entity.data.id,
+                  hasName: !!entity.data.name,
+                  hasTitle: !!entity.data.title,
+                  hasHouse: !!entity.data.house,
+                  hasValidReignStart: typeof entity.data.reignStart === 'number',
+                  source: entity.source
+                });
+                return null;
+              }
+
+              // Only create ruler with valid complete data
+              const ruler = {
+                id: entity.data.id,
+                name: entity.data.name,
+                title: entity.data.title,
+                reignStart: entity.data.reignStart,
+                ...(typeof entity.data.reignEnd === 'number' ? { reignEnd: entity.data.reignEnd } : {}),
+                house: entity.data.house,
+                castleIds: Array.isArray(entity.data.castleIds) ? entity.data.castleIds : [],
+                description: typeof entity.data.description === 'string' ? entity.data.description : "",
+                achievements: Array.isArray(entity.data.achievements) ? entity.data.achievements : [],
+              };
+
+              console.log(`✅ Loaded complete ruler entity: ${ruler.name} (${ruler.id})`);
+              return ruler;
+            })
+            .filter((ruler) => ruler !== null); // Remove incomplete entries
 
           // Set the ruler data for the virtual database
           setRulers(rulers);
@@ -119,6 +145,15 @@ describe("Rulers GraphQL Service Provider Verification", () => {
         cleanup: async () => {
           resetRulers();
         },
+        logger: (level, message) => {
+          if (level === 'error') {
+            console.error(`\n[PROVIDER VERIFICATION ERROR]\n${message}\n`)
+          } else if (level === 'warn') {
+            console.warn(`\n[PROVIDER VERIFICATION WARN]\n${message}\n`)
+          } else {
+            console.log(`\n[PROVIDER VERIFICATION INFO]\n${message}\n`)
+          }
+        }
       });
 
       console.log("\n📊 GraphQL Provider verification completed");
