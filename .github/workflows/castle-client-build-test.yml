@@ -61,6 +61,7 @@ jobs:
       - name: Run tests
         env:
           CI: true
+          ENTENTE_DEBUG: true
           ENTENTE_SERVICE_URL: ${{ vars.ENTENTE_SERVICE_URL }}
           ENTENTE_API_KEY: ${{ secrets.ENTENTE_API_KEY }}
         run: pnpm --filter castle-client test
