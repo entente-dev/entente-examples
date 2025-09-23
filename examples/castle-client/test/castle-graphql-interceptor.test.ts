@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { createClient } from '@entente/consumer'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { RulersGraphQLClient } from '../src/graphql-api.js'
 import { createGraphQLMockServer, type GraphQLMockServer } from './graphql-mock-server.js'
 
@@ -27,6 +27,12 @@ describe('Castle GraphQL Interceptor Tests', () => {
 
     // Create the GraphQL client pointing to our mock server
     rulersApi = new RulersGraphQLClient(mockServer.url)
+
+    // Set up request interceptor for castle-graphql service ONCE for all tests
+    interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
+      recording: true,
+      filter: (url) => url.includes(mockServer.url), // Only intercept calls to our mock server
+    })
   })
 
   afterAll(async () => {
@@ -43,12 +49,6 @@ describe('Castle GraphQL Interceptor Tests', () => {
     it('should query rulers by house', async () => {
       // Reset data before test
       mockServer.resetData()
-
-      // Set up request interceptor for castle-graphql service
-      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
-        recording: true,
-        filter: (url) => url.includes(mockServer.url), // Only intercept calls to our mock server
-      })
 
       // Make real GraphQL call using fetch directly to avoid graphql-request compatibility issues
       const query = `
@@ -96,10 +96,6 @@ describe('Castle GraphQL Interceptor Tests', () => {
     it('should query rulers by time period', async () => {
       mockServer.resetData()
 
-      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
-        recording: true,
-        filter: (url) => url.includes(mockServer.url),
-      })
 
       // Query rulers from 1600-1700 period using fetch directly
       const query = `
@@ -143,10 +139,6 @@ describe('Castle GraphQL Interceptor Tests', () => {
     it('should query a specific ruler (henry-iv)', async () => {
       mockServer.resetData()
 
-      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
-        recording: true,
-        filter: (url) => url.includes(mockServer.url),
-      })
 
       // Query for ruler-henry-iv-001 specifically to capture this ruler in fixtures
       const query = `
@@ -186,10 +178,6 @@ describe('Castle GraphQL Interceptor Tests', () => {
     it('should create a new ruler via GraphQL mutation', async () => {
       mockServer.resetData()
 
-      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
-        recording: true,
-        filter: (url) => url.includes(mockServer.url),
-      })
 
       // Create new ruler via GraphQL mutation
       const newRulerData = {
@@ -238,10 +226,6 @@ describe('Castle GraphQL Interceptor Tests', () => {
     it('should update a ruler via GraphQL mutation', async () => {
       mockServer.resetData()
 
-      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
-        recording: true,
-        filter: (url) => url.includes(mockServer.url),
-      })
 
       const updateRulerMutation = `
         mutation UpdateRuler($id: ID!, $input: UpdateRulerInput!) {
@@ -278,10 +262,6 @@ describe('Castle GraphQL Interceptor Tests', () => {
     it('should delete a ruler via GraphQL mutation', async () => {
       mockServer.resetData()
 
-      interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
-        recording: true,
-        filter: (url) => url.includes(mockServer.url),
-      })
 
       const deleteRulerMutation = `
         mutation DeleteRuler($id: ID!) {
