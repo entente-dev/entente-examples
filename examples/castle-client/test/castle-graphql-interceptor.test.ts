@@ -43,6 +43,8 @@ describe('Castle GraphQL Interceptor Tests', () => {
     if (mockServer) {
       await mockServer.close()
     }
+    // Give a moment for any final uploads to complete
+    await new Promise(resolve => setTimeout(resolve, 100))
   })
 
   describe('GraphQL API Tests', () => {

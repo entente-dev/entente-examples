@@ -7,22 +7,19 @@
           "id": "550e8400-e29b-41d4-a716-446655440000",
           "name": "Château de Versailles",
           "region": "Île-de-France",
-          "yearBuilt": 1623,
-          "description": "Famous royal residence known for its opulent architecture and gardens"
+          "yearBuilt": 1623
         },
         {
           "id": "550e8400-e29b-41d4-a716-446655440001",
           "name": "Château de Fontainebleau",
           "region": "Île-de-France",
-          "yearBuilt": 1137,
-          "description": "Historic royal palace with stunning Renaissance and classical architecture"
+          "yearBuilt": 1137
         },
         {
           "id": "550e8400-e29b-41d4-a716-446655440002",
           "name": "Château de Chambord",
           "region": "Centre-Val de Loire",
-          "yearBuilt": 1519,
-          "description": "Iconic French Renaissance castle with distinctive French defensive architecture"
+          "yearBuilt": 1519
         }
       ]
     }
@@ -34,8 +31,7 @@
         "id": "550e8400-e29b-41d4-a716-446655440000",
         "name": "Château de Versailles",
         "region": "Île-de-France",
-        "yearBuilt": 1623,
-        "description": "Famous royal residence known for its opulent architecture and gardens"
+        "yearBuilt": 1623
       }
     },
     "notFound": {
@@ -49,33 +45,32 @@
   "createCastle": {
     "success": {
       "status": 201,
+      "body": {
+        "id": "550e8400-e29b-41d4-a716-446655440003",
+        "name": "Château de Test",
+        "region": "Test Region",
+        "yearBuilt": 1500
+      },
       "request": {
         "body": {
           "name": "Château de Test",
           "region": "Test Region",
           "yearBuilt": 1500
         }
-      },
-      "body": {
-        "id": "550e8400-e29b-41d4-a716-446655440003",
-        "name": "Château de Test",
-        "region": "Test Region",
-        "yearBuilt": 1500,
-        "description": "A test castle created for demonstration purposes"
       }
     },
     "validationError": {
       "status": 400,
+      "body": {
+        "error": "validation_failed",
+        "message": "Castle name cannot be empty and year must be after 1000"
+      },
       "request": {
         "body": {
           "name": "",
           "region": "Test Region",
           "yearBuilt": 999
         }
-      },
-      "body": {
-        "error": "validation_failed",
-        "message": "Castle name cannot be empty and year must be after 1000"
       }
     }
   },

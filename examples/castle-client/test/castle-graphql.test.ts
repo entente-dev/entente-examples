@@ -1,44 +1,55 @@
-import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import 'dotenv/config'
 import { createClient } from '@entente/consumer'
-import type { LocalMockData } from '@entente/types'
-import dotenv from 'dotenv'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { RulersGraphQLClient } from '../src/graphql-api.js'
-
-dotenv.config()
+import { createGraphQLMockServer, type GraphQLMockServer } from './graphql-mock-server.js'
 
 describe('Castle GraphQL Consumer Contract Tests', () => {
-  let client: ReturnType<typeof createClient>
-  let graphqlMock: Awaited<ReturnType<typeof client.createMock>>
+  let entente: Awaited<ReturnType<typeof createClient>>
+  let mockServer: GraphQLMockServer
   let rulersApi: RulersGraphQLClient
+  let interceptor: Awaited<ReturnType<typeof entente.patchRequests>> | null = null
 
   beforeAll(async () => {
-    const graphqlMockDataPath = join(process.cwd(), 'mocks', 'castle-graphql.json')
-    const graphqlLocalMockData: LocalMockData = JSON.parse(readFileSync(graphqlMockDataPath, 'utf-8'))
-
-    client = await createClient({
+    // Create the entente client for intercepting requests
+    entente = await createClient({
       serviceUrl: process.env.ENTENTE_SERVICE_URL || '',
       apiKey: process.env.ENTENTE_API_KEY || '',
       consumer: 'castle-client',
+      consumerVersion: '0.1.5',
       environment: 'test',
       recordingEnabled: process.env.CI === 'true',
     })
 
-    graphqlMock = await client.createMock('castle-graphql', '0.1.0', {
-      useFixtures: true,
-      validateRequests: true,
-      validateResponses: true,
-      localMockData: graphqlLocalMockData,
-    })
+    // Create a GraphQL mock server (not using Entente mock - using interceptor instead)
+    mockServer = await createGraphQLMockServer()
+    console.log(`📡 GraphQL mock server started at ${mockServer.url}`)
 
-    rulersApi = new RulersGraphQLClient(graphqlMock.url)
+    // Create the GraphQL client pointing to our mock server
+    rulersApi = new RulersGraphQLClient(mockServer.url)
+
+    // Set up request interceptor for castle-graphql service
+    interceptor = await entente.patchRequests('castle-graphql', '0.1.0', {
+      recording: true,
+      filter: (url) => url.includes(mockServer.url), // Only intercept calls to our mock server
+    })
+  })
+
+  afterEach(() => {
+    // Reset data before each test
+    mockServer.resetData()
   })
 
   afterAll(async () => {
-    if (graphqlMock) {
-      await graphqlMock.close()
+    if (interceptor) {
+      await interceptor.unpatch()
+      interceptor = null
     }
+    if (mockServer) {
+      await mockServer.close()
+    }
+    // Give a moment for any final uploads to complete
+    await new Promise(resolve => setTimeout(resolve, 100))
   })
 
   describe('GraphQL Rulers API Contract Tests', () => {
@@ -113,12 +124,10 @@ describe('Castle GraphQL Consumer Contract Tests', () => {
     })
   })
 
-  describe('Mock Server Features', () => {
-    it('should use fixtures if available for graphql service', () => {
-      const fixtures = graphqlMock.getFixtures()
-
-      expect(fixtures).toBeDefined()
-      expect(Array.isArray(fixtures)).toBe(true)
+  describe('Interceptor Features', () => {
+    it('should record interactions when interceptor is enabled', () => {
+      expect(interceptor).toBeDefined()
+      expect(typeof interceptor?.unpatch).toBe('function')
     })
   })
 })

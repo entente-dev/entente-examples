@@ -6,22 +6,21 @@ import dotenv from 'dotenv'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { CastleApiClient } from '../src/castle-api.js'
 import { RulersGraphQLClient } from '../src/graphql-api.js'
+import { createGraphQLMockServer, type GraphQLMockServer } from './graphql-mock-server.js'
 
 dotenv.config()
 
 describe('Castle-Ruler Integration Tests', () => {
   let client: ReturnType<typeof createClient>
   let castleMock: Awaited<ReturnType<typeof client.createMock>>
-  let graphqlMock: Awaited<ReturnType<typeof client.createMock>>
+  let graphqlMockServer: GraphQLMockServer
+  let graphqlInterceptor: Awaited<ReturnType<typeof client.patchRequests>> | null = null
   let castleApi: CastleApiClient
   let rulersApi: RulersGraphQLClient
 
   beforeAll(async () => {
     const castleMockDataPath = join(process.cwd(), 'mocks', 'castle-service.json')
     const castleLocalMockData: LocalMockData = JSON.parse(readFileSync(castleMockDataPath, 'utf-8'))
-
-    const graphqlMockDataPath = join(process.cwd(), 'mocks', 'castle-graphql.json')
-    const graphqlLocalMockData: LocalMockData = JSON.parse(readFileSync(graphqlMockDataPath, 'utf-8'))
 
     client = await createClient({
       serviceUrl: process.env.ENTENTE_SERVICE_URL || '',
@@ -31,6 +30,7 @@ describe('Castle-Ruler Integration Tests', () => {
       recordingEnabled: process.env.CI === 'true',
     })
 
+    // Create REST API mock using entente
     castleMock = await client.createMock('castle-service', '0.1.0', {
       useFixtures: true,
       validateRequests: true,
@@ -38,23 +38,30 @@ describe('Castle-Ruler Integration Tests', () => {
       localMockData: castleLocalMockData,
     })
 
-    graphqlMock = await client.createMock('castle-graphql', '0.1.0', {
-      useFixtures: true,
-      validateRequests: true,
-      validateResponses: true,
-      localMockData: graphqlLocalMockData,
+    // Create GraphQL mock server (standalone) and use interceptor
+    graphqlMockServer = await createGraphQLMockServer()
+    console.log(`📡 GraphQL mock server started at ${graphqlMockServer.url}`)
+
+    // Set up request interceptor for castle-graphql service
+    graphqlInterceptor = await client.patchRequests('castle-graphql', '0.1.0', {
+      recording: true,
+      filter: (url) => url.includes(graphqlMockServer.url),
     })
 
-    castleApi = new CastleApiClient(castleMock.url, undefined, graphqlMock.url)
-    rulersApi = new RulersGraphQLClient(graphqlMock.url)
+    castleApi = new CastleApiClient(castleMock.url, undefined, graphqlMockServer.url)
+    rulersApi = new RulersGraphQLClient(graphqlMockServer.url)
   })
 
   afterAll(async () => {
     if (castleMock) {
       await castleMock.close()
     }
-    if (graphqlMock) {
-      await graphqlMock.close()
+    if (graphqlInterceptor) {
+      await graphqlInterceptor.unpatch()
+      graphqlInterceptor = null
+    }
+    if (graphqlMockServer) {
+      await graphqlMockServer.close()
     }
   })
 

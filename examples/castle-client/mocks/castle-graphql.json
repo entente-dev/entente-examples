@@ -1,173 +1,168 @@
 {
-  "getRulersByCastle": {
-    "versailles": {
-      "query": "query GetRulersByCastle($castleId: ID!) { getRulersByCastle(castleId: $castleId) { id name title reignStart reignEnd house castleIds description achievements } }",
-      "variables": { "castleId": "550e8400-e29b-41d4-a716-446655440000" },
-      "response": {
-        "data": {
-          "getRulersByCastle": [
-            {
-              "id": "ruler-louis-xiv-001",
-              "name": "Louis XIV",
-              "title": "The Sun King",
-              "reignStart": 1643,
-              "reignEnd": 1715,
-              "house": "Bourbon",
-              "castleIds": ["550e8400-e29b-41d4-a716-446655440000"],
-              "description": "Known for his absolute monarchy and the construction of the Palace of Versailles. His reign of 72 years is the longest of any European monarch.",
-              "achievements": [
-                "Longest reigning European monarch (72 years)",
-                "Built the magnificent Palace of Versailles",
-                "Patron of arts and literature",
-                "Established French cultural dominance in Europe",
-                "Centralized royal power in France"
-              ]
-            },
-            {
-              "id": "ruler-louis-xiii-005",
-              "name": "Louis XIII",
-              "title": "The Just",
-              "reignStart": 1610,
-              "reignEnd": 1643,
-              "house": "Bourbon",
-              "castleIds": ["550e8400-e29b-41d4-a716-446655440000"],
-              "description": "Father of Louis XIV, established the foundations of absolute monarchy with Cardinal Richelieu.",
-              "achievements": [
-                "Strengthened royal authority",
-                "Defeated Protestant strongholds",
-                "Expanded French territory",
-                "Established foundations for absolute monarchy"
-              ]
-            }
-          ]
+  "POST /graphql": {
+    "getRulersByCastle_versailles": {
+      "request": {
+        "body": {
+          "query": "query GetRulersByCastle($castleId: ID!) { getRulersByCastle(castleId: $castleId) { id name title reignStart reignEnd house castleIds description achievements } }",
+          "variables": { "castleId": "550e8400-e29b-41d4-a716-446655440000" }
         }
-      }
-    },
-    "fontainebleau": {
-      "query": "query GetRulersByCastle($castleId: ID!) { getRulersByCastle(castleId: $castleId) { id name title reignStart reignEnd house castleIds description achievements } }",
-      "variables": { "castleId": "550e8400-e29b-41d4-a716-446655440001" },
+      },
       "response": {
-        "data": {
-          "getRulersByCastle": [
-            {
-              "id": "ruler-francois-i-002",
-              "name": "François I",
-              "title": "King of France",
-              "reignStart": 1515,
-              "reignEnd": 1547,
-              "house": "Valois-Angoulême",
-              "castleIds": ["550e8400-e29b-41d4-a716-446655440001", "550e8400-e29b-41d4-a716-446655440002"],
-              "description": "Renaissance monarch who brought Italian Renaissance culture to France and was a great patron of the arts.",
-              "achievements": [
-                "Brought Renaissance culture to France",
-                "Patron of Leonardo da Vinci",
-                "Founded the Collège de France",
-                "Established the first royal library",
-                "Built and renovated numerous châteaux"
-              ]
-            },
-            {
-              "id": "ruler-philip-augustus-006",
-              "name": "Philippe Auguste",
-              "title": "Philip II of France",
-              "reignStart": 1180,
-              "reignEnd": 1223,
-              "house": "Capetian",
-              "castleIds": ["550e8400-e29b-41d4-a716-446655440001"],
-              "description": "First French king to use the title 'King of France' rather than 'King of the Franks', greatly expanded royal domain.",
-              "achievements": [
-                "Tripled the size of French royal domain",
-                "Defeated John of England at Bouvines",
-                "Built walls around Paris",
-                "Established permanent royal administration",
-                "Participated in the Third Crusade"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    "chambord": {
-      "query": "query GetRulersByCastle($castleId: ID!) { getRulersByCastle(castleId: $castleId) { id name title reignStart reignEnd house castleIds description achievements } }",
-      "variables": { "castleId": "550e8400-e29b-41d4-a716-446655440002" },
-      "response": {
-        "data": {
-          "getRulersByCastle": [
-            {
-              "id": "ruler-francois-i-002",
-              "name": "François I",
-              "title": "King of France",
-              "reignStart": 1515,
-              "reignEnd": 1547,
-              "house": "Valois-Angoulême",
-              "castleIds": ["550e8400-e29b-41d4-a716-446655440001", "550e8400-e29b-41d4-a716-446655440002"],
-              "description": "Renaissance monarch who brought Italian Renaissance culture to France and was a great patron of the arts.",
-              "achievements": [
-                "Brought Renaissance culture to France",
-                "Patron of Leonardo da Vinci",
-                "Founded the Collège de France",
-                "Established the first royal library",
-                "Built and renovated numerous châteaux"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    "noRulers": {
-      "query": "query GetRulersByCastle($castleId: ID!) { getRulersByCastle(castleId: $castleId) { id name title reignStart reignEnd house castleIds description achievements } }",
-      "variables": { "castleId": "550e8400-e29b-41d4-a716-446655440003" },
-      "response": {
-        "data": {
-          "getRulersByCastle": []
-        }
-      }
-    }
-  },
-  "getRuler": {
-    "success": {
-      "query": "query GetRuler($id: ID!) { getRuler(id: $id) { id name title reignStart reignEnd house castleIds description achievements } }",
-      "variables": { "id": "ruler-louis-xiv-001" },
-      "response": {
-        "data": {
-          "getRuler": {
-            "id": "ruler-louis-xiv-001",
-            "name": "Louis XIV",
-            "title": "The Sun King",
-            "reignStart": 1643,
-            "reignEnd": 1715,
-            "house": "Bourbon",
-            "castleIds": ["550e8400-e29b-41d4-a716-446655440000"],
-            "description": "Known for his absolute monarchy and the construction of the Palace of Versailles. His reign of 72 years is the longest of any European monarch.",
-            "achievements": [
-              "Longest reigning European monarch (72 years)",
-              "Built the magnificent Palace of Versailles",
-              "Patron of arts and literature",
-              "Established French cultural dominance in Europe",
-              "Centralized royal power in France"
+        "status": 200,
+        "body": {
+          "data": {
+            "getRulersByCastle": [
+              {
+                "id": "ruler-louis-xiv-001",
+                "name": "Louis XIV",
+                "title": "The Sun King",
+                "reignStart": 1643,
+                "reignEnd": 1715,
+                "house": "Bourbon",
+                "castleIds": ["550e8400-e29b-41d4-a716-446655440000"],
+                "description": "Known for his absolute monarchy and the construction of the Palace of Versailles. His reign of 72 years is the longest of any European monarch.",
+                "achievements": [
+                  "Longest reigning European monarch (72 years)",
+                  "Built the magnificent Palace of Versailles",
+                  "Patron of arts and literature",
+                  "Established French cultural dominance in Europe",
+                  "Centralized royal power in France"
+                ]
+              },
+              {
+                "id": "ruler-louis-xiii-005",
+                "name": "Louis XIII",
+                "title": "The Just",
+                "reignStart": 1610,
+                "reignEnd": 1643,
+                "house": "Bourbon",
+                "castleIds": ["550e8400-e29b-41d4-a716-446655440000"],
+                "description": "Father of Louis XIV, established the foundations of absolute monarchy with Cardinal Richelieu.",
+                "achievements": [
+                  "Strengthened royal authority",
+                  "Defeated Protestant strongholds",
+                  "Expanded French territory",
+                  "Established foundations for absolute monarchy"
+                ]
+              }
             ]
           }
         }
       }
     },
-    "notFound": {
-      "query": "query GetRuler($id: ID!) { getRuler(id: $id) { id name title reignStart reignEnd house castleIds description achievements } }",
-      "variables": { "id": "non-existent-ruler" },
+    "getRulersByCastle_fontainebleau": {
+      "request": {
+        "body": {
+          "query": "query GetRulersByCastle($castleId: ID!) { getRulersByCastle(castleId: $castleId) { id name title reignStart reignEnd house castleIds description achievements } }",
+          "variables": { "castleId": "550e8400-e29b-41d4-a716-446655440001" }
+        }
+      },
       "response": {
-        "data": {
-          "getRuler": null
+        "status": 200,
+        "body": {
+          "data": {
+            "getRulersByCastle": [
+              {
+                "id": "ruler-francois-i-002",
+                "name": "François I",
+                "title": "King of France",
+                "reignStart": 1515,
+                "reignEnd": 1547,
+                "house": "Valois-Angoulême",
+                "castleIds": ["550e8400-e29b-41d4-a716-446655440001", "550e8400-e29b-41d4-a716-446655440002"],
+                "description": "Renaissance monarch who brought Italian Renaissance culture to France and was a great patron of the arts.",
+                "achievements": [
+                  "Brought Renaissance culture to France",
+                  "Patron of Leonardo da Vinci",
+                  "Founded the Collège de France",
+                  "Established the first royal library",
+                  "Built and renovated numerous châteaux"
+                ]
+              },
+              {
+                "id": "ruler-philip-augustus-006",
+                "name": "Philippe Auguste",
+                "title": "Philip II of France",
+                "reignStart": 1180,
+                "reignEnd": 1223,
+                "house": "Capetian",
+                "castleIds": ["550e8400-e29b-41d4-a716-446655440001"],
+                "description": "First French king to use the title 'King of France' rather than 'King of the Franks', greatly expanded royal domain.",
+                "achievements": [
+                  "Tripled the size of French royal domain",
+                  "Defeated John of England at Bouvines",
+                  "Built walls around Paris",
+                  "Established permanent royal administration",
+                  "Participated in the Third Crusade"
+                ]
+              }
+            ]
+          }
         }
       }
-    }
-  },
-  "listRulers": {
-    "success": {
-      "query": "query ListRulers { listRulers { id name title reignStart reignEnd house castleIds description achievements } }",
-      "variables": {},
+    },
+    "getRulersByCastle_chambord": {
+      "request": {
+        "body": {
+          "query": "query GetRulersByCastle($castleId: ID!) { getRulersByCastle(castleId: $castleId) { id name title reignStart reignEnd house castleIds description achievements } }",
+          "variables": { "castleId": "550e8400-e29b-41d4-a716-446655440002" }
+        }
+      },
       "response": {
-        "data": {
-          "listRulers": [
-            {
+        "status": 200,
+        "body": {
+          "data": {
+            "getRulersByCastle": [
+              {
+                "id": "ruler-francois-i-002",
+                "name": "François I",
+                "title": "King of France",
+                "reignStart": 1515,
+                "reignEnd": 1547,
+                "house": "Valois-Angoulême",
+                "castleIds": ["550e8400-e29b-41d4-a716-446655440001", "550e8400-e29b-41d4-a716-446655440002"],
+                "description": "Renaissance monarch who brought Italian Renaissance culture to France and was a great patron of the arts.",
+                "achievements": [
+                  "Brought Renaissance culture to France",
+                  "Patron of Leonardo da Vinci",
+                  "Founded the Collège de France",
+                  "Established the first royal library",
+                  "Built and renovated numerous châteaux"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "getRulersByCastle_noRulers": {
+      "request": {
+        "body": {
+          "query": "query GetRulersByCastle($castleId: ID!) { getRulersByCastle(castleId: $castleId) { id name title reignStart reignEnd house castleIds description achievements } }",
+          "variables": { "castleId": "550e8400-e29b-41d4-a716-446655440003" }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "data": {
+            "getRulersByCastle": []
+          }
+        }
+      }
+    },
+    "getRuler_success": {
+      "request": {
+        "body": {
+          "query": "query GetRuler($id: ID!) { getRuler(id: $id) { id name title reignStart reignEnd house castleIds description achievements } }",
+          "variables": { "id": "ruler-louis-xiv-001" }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "data": {
+            "getRuler": {
               "id": "ruler-louis-xiv-001",
               "name": "Louis XIV",
               "title": "The Sun King",
@@ -183,36 +178,91 @@
                 "Established French cultural dominance in Europe",
                 "Centralized royal power in France"
               ]
-            },
-            {
-              "id": "ruler-francois-i-002",
-              "name": "François I",
-              "title": "King of France",
-              "reignStart": 1515,
-              "reignEnd": 1547,
-              "house": "Valois-Angoulême",
-              "castleIds": ["550e8400-e29b-41d4-a716-446655440001", "550e8400-e29b-41d4-a716-446655440002"],
-              "description": "Renaissance monarch who brought Italian Renaissance culture to France and was a great patron of the arts.",
-              "achievements": [
-                "Brought Renaissance culture to France",
-                "Patron of Leonardo da Vinci",
-                "Founded the Collège de France",
-                "Established the first royal library",
-                "Built and renovated numerous châteaux"
-              ]
             }
-          ]
+          }
         }
       }
-    }
-  },
-  "health": {
-    "success": {
-      "query": "query Health { health }",
-      "variables": {},
+    },
+    "getRuler_notFound": {
+      "request": {
+        "body": {
+          "query": "query GetRuler($id: ID!) { getRuler(id: $id) { id name title reignStart reignEnd house castleIds description achievements } }",
+          "variables": { "id": "non-existent-ruler" }
+        }
+      },
       "response": {
-        "data": {
-          "health": "Rulers GraphQL service is healthy! 👑"
+        "status": 200,
+        "body": {
+          "data": {
+            "getRuler": null
+          }
+        }
+      }
+    },
+    "listRulers_success": {
+      "request": {
+        "body": {
+          "query": "query ListRulers { listRulers { id name title reignStart reignEnd house castleIds description achievements } }",
+          "variables": {}
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "data": {
+            "listRulers": [
+              {
+                "id": "ruler-louis-xiv-001",
+                "name": "Louis XIV",
+                "title": "The Sun King",
+                "reignStart": 1643,
+                "reignEnd": 1715,
+                "house": "Bourbon",
+                "castleIds": ["550e8400-e29b-41d4-a716-446655440000"],
+                "description": "Known for his absolute monarchy and the construction of the Palace of Versailles. His reign of 72 years is the longest of any European monarch.",
+                "achievements": [
+                  "Longest reigning European monarch (72 years)",
+                  "Built the magnificent Palace of Versailles",
+                  "Patron of arts and literature",
+                  "Established French cultural dominance in Europe",
+                  "Centralized royal power in France"
+                ]
+              },
+              {
+                "id": "ruler-francois-i-002",
+                "name": "François I",
+                "title": "King of France",
+                "reignStart": 1515,
+                "reignEnd": 1547,
+                "house": "Valois-Angoulême",
+                "castleIds": ["550e8400-e29b-41d4-a716-446655440001", "550e8400-e29b-41d4-a716-446655440002"],
+                "description": "Renaissance monarch who brought Italian Renaissance culture to France and was a great patron of the arts.",
+                "achievements": [
+                  "Brought Renaissance culture to France",
+                  "Patron of Leonardo da Vinci",
+                  "Founded the Collège de France",
+                  "Established the first royal library",
+                  "Built and renovated numerous châteaux"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "health_success": {
+      "request": {
+        "body": {
+          "query": "query Health { health }",
+          "variables": {}
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "data": {
+            "health": "Rulers GraphQL service is healthy! 👑"
+          }
         }
       }
     }

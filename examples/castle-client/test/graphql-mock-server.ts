@@ -132,8 +132,13 @@ const resolvers = {
 
   Mutation: {
     createRuler: (_: any, { input }: { input: Omit<Ruler, 'id'> }) => {
+      // Generate consistent ID based on input data for testing
+      const nameSlug = input.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+      const houseSlug = input.house.toLowerCase()
+      const consistentId = `ruler-${nameSlug}-${houseSlug}-${input.reignStart}`
+
       const newRuler: Ruler = {
-        id: `ruler-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        id: consistentId,
         ...input,
         castleIds: input.castleIds || [],
         achievements: input.achievements || [],
